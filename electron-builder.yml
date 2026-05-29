@@ -1,0 +1,39 @@
+appId: com.c2developers.decabox.photomaton
+productName: DecaBox Photomaton
+copyright: Copyright © 2026 C2 Developers
+
+directories:
+  buildResources: build
+  output: release/${version}
+
+files:
+  - out/**/*
+  - package.json
+
+# Binarios nativos (EDSDK dll, ffmpeg, …) y recursos empaquetados sin recompilar.
+extraResources:
+  - from: resources
+    to: resources
+    filter:
+      - '**/*'
+      - '!.gitkeep'
+
+asarUnpack:
+  - resources/**
+
+# Plataforma objetivo: Windows x64 (Surface).
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
+
+# Carpeta de assets de empaquetado (iconos, etc.). Se crea cuando se añadan.
+# build/icon.ico → icono de la app.
